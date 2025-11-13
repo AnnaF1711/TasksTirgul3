@@ -8,7 +8,7 @@ function TodoList() {
         if(index===null){//אתה לא מעדכן כלום...
             setTasks([...tasks, task]);//שלוש נקודות זה תשמור את מה שהיה קודם
         }else{
-            const updatedTasks=tasks;//אם אינדקס לא נאל, כלומר אתה מעדכן משימה במשהו אחר
+            const updatedTasks=[...tasks];//אם אינדקס לא נאל, כלומר אתה מעדכן משימה במשהו אחר
             updatedTasks[index]=task;//יוצרים מערך חדש ומחליפים ערך
             setTasks(updatedTasks);//מעדכנים את המערך החדש
             setIndex(null)//מחליפים חזרה את האינדקס לנאל במידה ונרצה לעדכן שוב מתישהו
@@ -17,9 +17,9 @@ function TodoList() {
     }
     const editTask = (index) => {
         setIndex(index);
-        setTasks([tasks, index]);
+        setTask(tasks [index]);
     }
-    const deleteTask = () => {
+    const deleteTask = (index) => {
         setTasks(tasks.filter((task,i)=>i !==index))//עושה סינון, כל מי שעומד בתנאי והאינדקס לא שווה לi => הוא נשאר, אם שווה => נמחק
         setIndex(null);
     }
@@ -46,13 +46,14 @@ function TodoList() {
             {
                 task.length>0 &&//שלא יציג כלום אם אין, משתמשים ב'וגם'
                 (//יו אל זה רשימה לא ממוספרת
-                    <ul>{//*יו אל זה בעצם אנאורדרד ליסט, פשוט רשימה לא ממוספרת, זה מערך בסופו של דבר, אנחנו רוצים שהיא תוצג לנו, ומה יהיה בה? מה שנכתוב בפנים בסוגריים המסולסלים*//
+                    // *יו אל זה בעצם אנאורדרד ליסט, פשוט רשימה לא ממוספרת, זה מערך בסופו של דבר, אנחנו רוצים שהיא תוצג לנו, ומה יהיה בה? מה שנכתוב בפנים בסוגריים המסולסלים*//
+                    <ul>
                         {
-                            task.map((task, index) => //item->the object, index-> the index of our list
+                            tasks.map((task, index) => //item->the object, index-> the index of our list
                             <li key={index}>
                                 {task}
                                 <button onClick={()=>editTask(index)}>Edit</button>
-                                <button onClick={deleteTask}>Delete</button>
+                                <button onClick={()=>deleteTask(index)}>Delete</button>
                                 </li>
                             )
                         }
